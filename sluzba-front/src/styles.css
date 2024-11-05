@@ -28,4 +28,10 @@ app-footer {
   color: white;
   text-align: center;
   padding: 10px;
+  border-radius: 15px 15px 0 0;
+}
+
+/* custom bootstrap */
+.vh-75 {
+  height: 75vh;
 }

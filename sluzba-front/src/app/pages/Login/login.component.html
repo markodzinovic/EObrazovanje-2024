@@ -1,0 +1,30 @@
+<div class="d-flex vh-75 align-items-center justify-content-center">
+  <div class="card shadow" style="width: 100%; max-width: 400px">
+    <div class="card-body">
+      <h3 class="card-title text-center mb-4">Prijava</h3>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="mb-3">
+          <label for="email" class="form-label">Korisnicko ime</label>
+          <input
+            type="text"
+            class="form-control"
+            id="username"
+            formControlName="username"
+            placeholder="Unesite korisnicko ime"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Lozinka</label>
+          <input
+            type="password"
+            class="form-control"
+            id="password"
+            formControlName="password"
+            placeholder="Unesite lozinku"
+          />
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Prijava</button>
+      </form>
+    </div>
+  </div>
+</div>
