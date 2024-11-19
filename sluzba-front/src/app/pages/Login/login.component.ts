@@ -6,19 +6,24 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpErrorResponse } from '@angular/common/http';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule, HttpClientModule],
+  imports: [ReactiveFormsModule, HttpClientModule, RouterModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
 export class LoginComponent {
   loginForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private authService: AuthService) {
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router
+  ) {
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required],
@@ -26,16 +31,22 @@ export class LoginComponent {
   }
 
   onSubmit(): void {
+    if (!this.loginForm.valid) {
+      console.log('Ne radi');
+      return;
+    }
+
     const { username, password } = this.loginForm.value;
     console.log(username);
     console.log(password);
     this.authService.login({ username, password }).subscribe({
       next: (response) => {
         console.log('Login successful', response);
-        // Navigate to the dashboard or another page on successful login
+        this.router.navigate(['/']);
       },
       error: (error) => {
-        console.error('Login failed', error);
+        console.error('Login failed', error.message);
+        // Handle error, e.g., show an error message
       },
     });
   }

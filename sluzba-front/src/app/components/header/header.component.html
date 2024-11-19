@@ -2,12 +2,18 @@
   <nav class="navbar">
     <div class="logo">
       <img class="logo-image" src="../../../assets/ftn.png" />
-      <a href="/">Sluzba</a>
+      <a routerLink="/">Sluzba</a>
     </div>
     <ul class="nav-links">
-      <li><a routerLink="/">Home</a></li>
-      <li><a routerLink="/about">About</a></li>
-      <li><a routerLink="/contact">Contact</a></li>
+      <ng-container *ngIf="isAuthenticated; else guestLinks">
+        <li><a routerLink="/">Profil</a></li>
+        <li>
+          <a (click)="logout()">Odjava</a>
+        </li>
+      </ng-container>
+      <ng-template #guestLinks>
+        <li><a routerLink="/login">Prijava</a></li>
+      </ng-template>
     </ul>
   </nav>
 </header>

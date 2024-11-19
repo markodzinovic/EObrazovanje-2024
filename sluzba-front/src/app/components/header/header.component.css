@@ -36,3 +36,8 @@
   color: white;
   text-decoration: none;
 }
+
+.nav-links a:hover {
+  color: grey;
+  cursor: pointer;
+}

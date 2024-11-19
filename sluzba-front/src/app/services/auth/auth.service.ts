@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpService } from '../http.service'; // Import the HttpService
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { environment } from '../../../environment/environment';
-
-interface AuthResponse {
-  token: string;
-  user: any;
-}
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpHeaders,
+} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +17,7 @@ export class AuthService {
   private isAuthenticatedSubject: BehaviorSubject<boolean> =
     new BehaviorSubject<boolean>(false);
 
-  constructor(private httpService: HttpService) {
+  constructor(private httpService: HttpClient) {
     // Check if the token exists on initialization
     const token = this.getToken();
     this.isAuthenticatedSubject.next(!!token);
@@ -27,14 +26,24 @@ export class AuthService {
   login(credentials: {
     username: string;
     password: string;
-  }): Observable<AuthResponse> {
+  }): Observable<string> {
+    const headers: HttpHeaders = new HttpHeaders({
+      'Content-Type': 'application/json',
+    });
+
     return this.httpService
-      .post<AuthResponse>(`${this.apiUrl}/login`, credentials)
+      .post(`${this.apiUrl}/login`, credentials, {
+        headers,
+        responseType: 'text', // Tell Angular to expect a plain text response
+      })
       .pipe(
-        catchError((error) => {
-          // Handle error as needed (e.g., show message, log out)
-          console.error('Login error:', error);
-          throw error; // rethrow the error after logging
+        tap((token: string) => {
+          this.storeToken(token); // Save the token locally
+          this.isAuthenticatedSubject.next(true);
+        }),
+        catchError((error: HttpErrorResponse) => {
+          console.error('Login error', error);
+          return throwError(() => error);
         })
       );
   }
