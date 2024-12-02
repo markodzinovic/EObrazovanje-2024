@@ -6,7 +6,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { HttpClientModule, HttpErrorResponse } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { Router, RouterModule } from '@angular/router';
 
 @Component({
@@ -45,7 +45,7 @@ export class LoginComponent {
         this.router.navigate(['/']);
       },
       error: (error) => {
-        console.error('Login failed', error.message);
+        console.error(error.message);
         // Handle error, e.g., show an error message
       },
     });

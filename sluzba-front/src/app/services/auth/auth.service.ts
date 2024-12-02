@@ -12,7 +12,6 @@ import {
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = environment.apiUrl;
   private tokenKey = 'authToken';
   private isAuthenticatedSubject: BehaviorSubject<boolean> =
     new BehaviorSubject<boolean>(false);
@@ -32,7 +31,7 @@ export class AuthService {
     });
 
     return this.httpService
-      .post(`${this.apiUrl}/login`, credentials, {
+      .post(`${environment.apiUrl}/login`, credentials, {
         headers,
         responseType: 'text', // Tell Angular to expect a plain text response
       })
@@ -42,8 +41,7 @@ export class AuthService {
           this.isAuthenticatedSubject.next(true);
         }),
         catchError((error: HttpErrorResponse) => {
-          console.error('Login error', error);
-          return throwError(() => error);
+          throw new Error(error.error)
         })
       );
   }
@@ -61,7 +59,7 @@ export class AuthService {
     localStorage.setItem(this.tokenKey, token);
   }
 
-  getToken(): string | null {
-    return localStorage.getItem(this.tokenKey);
+  getToken(): string {
+    return localStorage.getItem(this.tokenKey) ?? '';
   }
 }

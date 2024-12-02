@@ -1,0 +1,75 @@
+<div class="container mt-3">
+  <h3>Nastavnici</h3>
+
+  <button type="button" class="btn btn-primary mb-3" (click)="openModal()">
+    +
+  </button>
+
+  <app-custom-modal [title]="'Dodavanje nastavnika'">
+    <form [formGroup]="addTeacherForm" (ngSubmit)="onSubmit()">
+      <div class="mb-3">
+        <label for="email" class="form-label">Ime</label>
+        <input
+          type="text"
+          class="form-control"
+          id="firstName"
+          formControlName="firstName"
+          placeholder="Unesite ime"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="email" class="form-label">Prezime</label>
+        <input
+          type="text"
+          class="form-control"
+          id="lastName"
+          formControlName="lastName"
+          placeholder="Unesite prezime"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="email" class="form-label">Korisnicko ime</label>
+        <input
+          type="text"
+          class="form-control"
+          id="username"
+          formControlName="username"
+          placeholder="Unesite korisnicko ime"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Lozinka</label>
+        <input
+          type="password"
+          class="form-control"
+          id="password"
+          formControlName="password"
+          placeholder="Unesite lozinku"
+        />
+      </div>
+      <div class="d-flex justify-content-end gap-2">
+        <button type="button" class="btn btn-danger" (click)="onCloseForm()">
+          Odustani
+        </button>
+        <button type="submit" class="btn btn-success">Dodaj</button>
+      </div>
+    </form>
+  </app-custom-modal>
+
+  <table *ngIf="!loading" class="table table-striped table-bordered mt-3">
+    <thead class="table-dark">
+      <tr>
+        <th>Id</th>
+        <th>Ime</th>
+        <th>Prezime</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of data">
+        <td>{{ item.id }}</td>
+        <td>{{ item.firstName }}</td>
+        <td>{{ item.lastName }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

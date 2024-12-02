@@ -1,0 +1,33 @@
+<div
+  class="modal fade"
+  [class.show]="modalService.isModalOpen$ | async"
+  tabindex="-1"
+  role="dialog"
+  aria-hidden="true"
+  [ngClass]="{ 'd-block': (modalService.isModalOpen$ | async) }"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ title }}</h5>
+        <button
+          type="button"
+          class="btn close"
+          data-dismiss="modal"
+          aria-label="Close"
+          (click)="close()"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <ng-content></ng-content>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  class="modal-backdrop fade"
+  [class.show]="modalService.isModalOpen$ | async"
+  *ngIf="modalService.isModalOpen$ | async"
+></div>
