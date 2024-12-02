@@ -55,7 +55,8 @@ public class SecurityConfig {
 				.csrf(csrf -> csrf.disable())
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.authorizeHttpRequests(
-						auth -> auth.requestMatchers("/index.html", "/api/test", "/api/register", "/api/login")
+//						auth -> auth.requestMatchers("/index.html", "/api/test", "/api/register", "/api/login", "/api/**")
+						auth -> auth.requestMatchers("/**")//api/** added for testing, until i added role
 								.permitAll().anyRequest().authenticated());
 
 		http.addFilterBefore(authTokenFilter, UsernamePasswordAuthenticationFilter.class);

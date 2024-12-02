@@ -48,10 +48,10 @@ public class AuthController {
 					loginDTO.password);
 			authenticationManager.authenticate(token);
 			UserDetails details = userDetailsServiceImpl.loadUserByUsername(loginDTO.username);
+
 			return new ResponseEntity<String>(tokenUtils.generateToken(details), HttpStatus.OK);
 		} catch (Exception ex) {
-			System.out.print(ex.getMessage());
-			return new ResponseEntity<String>("Invalid login", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<String>(ex.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
 

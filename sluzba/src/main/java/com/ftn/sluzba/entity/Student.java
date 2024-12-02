@@ -33,9 +33,6 @@ public class Student {
 	@Column(name = "accountNumber")
 	private Integer accountNumber;
 
-	@Column(name = "active")
-	private boolean active = true;
-
 	@OneToOne(optional = true, cascade = CascadeType.ALL)
 	@JoinColumn(name = "User_id", referencedColumnName = "id")
 	private User user;
@@ -53,7 +50,6 @@ public class Student {
 		this.cardNumber = cardNumber;
 		this.balance = balance;
 		this.accountNumber = accountNumber;
-		this.active = active;
 		this.user = user;
 	}
 
@@ -103,14 +99,6 @@ public class Student {
 
 	public void setAccountNumber(Integer accountNumber) {
 		this.accountNumber = accountNumber;
-	}
-
-	public boolean isActive() {
-		return active;
-	}
-
-	public void setActive(boolean active) {
-		this.active = active;
 	}
 
 	public User getUser() {
