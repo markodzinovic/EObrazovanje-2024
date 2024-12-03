@@ -56,7 +56,7 @@ export class TeachersComponent implements OnInit {
     });
   }
 
-  onSubmit(): void {
+  onSubmit(idModal: string): void {
     if (!this.addTeacherForm.valid) {
       console.log('Ne radi');
       return;
@@ -70,7 +70,7 @@ export class TeachersComponent implements OnInit {
     this.teacherService.addTeacher(_teacher).subscribe({
       next: (response) => {
         this.data.push(response);
-        this.closeModal();
+        this.closeModal(idModal);
       },
       error: (error) => {
         console.error(error.message);
@@ -79,16 +79,16 @@ export class TeachersComponent implements OnInit {
     });
   }
 
-  onCloseForm(): void {
+  onCloseForm(idModal: string): void {
     this.addTeacherForm.reset();
-    this.closeModal();
+    this.closeModal(idModal);
   }
 
-  openModal() {
-    this.modalService.openModal();
+  openModal(idModal: string) {
+    this.modalService.openModal(idModal);
   }
 
-  closeModal(): void {
-    this.modalService.closeModal();
+  closeModal(idModal: string): void {
+    this.modalService.closeModal(idModal);
   }
 }

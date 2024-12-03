@@ -1,4 +1,3 @@
-// modal.service.ts
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
@@ -6,15 +5,25 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class ModalService {
-  private isModalOpenSubject = new BehaviorSubject<boolean>(false);
-  isModalOpen$ = this.isModalOpenSubject.asObservable();
+  private modalStates = new Map<string, BehaviorSubject<boolean>>();
 
-  openModal() {
-    console.log('Opening modal...');
-    this.isModalOpenSubject.next(true);
+  isModalOpen(id: string) {
+    if (!this.modalStates.has(id)) {
+      this.modalStates.set(id, new BehaviorSubject<boolean>(false));
+    }
+    return this.modalStates.get(id)?.asObservable();
   }
 
-  closeModal() {
-    this.isModalOpenSubject.next(false);
+  openModal(id: string) {
+    if (!this.modalStates.has(id)) {
+      this.modalStates.set(id, new BehaviorSubject<boolean>(false));
+    }
+    this.modalStates.get(id)?.next(true);
+  }
+
+  closeModal(id: string) {
+    if (this.modalStates.has(id)) {
+      this.modalStates.get(id)?.next(false);
+    }
   }
 }
