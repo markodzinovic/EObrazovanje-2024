@@ -6,7 +6,15 @@
     </div>
     <ul class="nav-links">
       <ng-container *ngIf="isAuthenticated; else guestLinks">
-        <li><a routerLink="/teachers">Nastavnici</a></li>
+        <!-- Dropdown Menu for Korisnici -->
+        <li class="dropdown">
+          <a class="dropdown-toggle">Korisnici</a>
+          <ul class="dropdown-menu">
+            <li><a routerLink="/students">Studenti</a></li>
+            <li><a routerLink="/teachers">Nastavnici</a></li>
+            <li><a routerLink="/users">Korisnici</a></li>
+          </ul>
+        </li>
         <li>
           <a (click)="logout()">Odjava</a>
         </li>

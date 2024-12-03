@@ -10,11 +10,12 @@ import { ModalService } from '../../services/modal/modal.service';
   standalone: true,
 })
 export class CustomModalComponent {
+  @Input() id!: string;
   @Input() title: string = 'Default Title';
 
   constructor(public modalService: ModalService) {}
 
   close() {
-    this.modalService.closeModal();
+    this.modalService.closeModal(this.id);
   }
 }
