@@ -31,7 +31,7 @@ public class Student {
 	private Integer balance;
 
 	@Column(name = "accountNumber")
-	private Integer accountNumber;
+	private String accountNumber;
 
 	@OneToOne(optional = true, cascade = CascadeType.ALL)
 	@JoinColumn(name = "User_id", referencedColumnName = "id")
@@ -41,8 +41,18 @@ public class Student {
 		super();
 	}
 
-	public Student(Long id, String firstName, String lastName, String cardNumber, Integer balance,
-			Integer accountNumber, boolean active, User user) {
+	public Student(String firstName, String lastName, String cardNumber, Integer balance, String accountNumber,
+			User user) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.cardNumber = cardNumber;
+		this.balance = balance;
+		this.accountNumber = accountNumber;
+		this.user = user;
+	}
+
+	public Student(Long id, String firstName, String lastName, String cardNumber, Integer balance, String accountNumber,
+			User user) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
@@ -93,11 +103,11 @@ public class Student {
 		this.balance = balance;
 	}
 
-	public Integer getAccountNumber() {
+	public String getAccountNumber() {
 		return accountNumber;
 	}
 
-	public void setAccountNumber(Integer accountNumber) {
+	public void setAccountNumber(String accountNumber) {
 		this.accountNumber = accountNumber;
 	}
 

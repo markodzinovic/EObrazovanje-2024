@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.ftn.sluzba.dto.AddStudentDTO;
 import com.ftn.sluzba.dto.AddTeacherDTO;
-import com.ftn.sluzba.dto.RegisterDTO;
 import com.ftn.sluzba.entity.User;
 import com.ftn.sluzba.enums.Role;
 import com.ftn.sluzba.repository.UserRepository;
@@ -23,9 +23,9 @@ public class UserService {
 		return userRepository.findByUserName(username);
 	}
 
-	public User saveUser(RegisterDTO registerDTO) {
-		User newUser = new User(registerDTO.username, bCryptPasswordEncoder.encode(registerDTO.password),
-				Role.ROLE_ADMIN, false);
+	public User saveUser(AddStudentDTO addStudentDTO) {
+		User newUser = new User(addStudentDTO.username, bCryptPasswordEncoder.encode(addStudentDTO.password),
+				Role.ROLE_STUDENT, true);
 		return userRepository.save(newUser);
 	}
 	

@@ -12,10 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ftn.sluzba.dto.LoginDTO;
-import com.ftn.sluzba.dto.RegisterDTO;
 import com.ftn.sluzba.security.TokenUtils;
 import com.ftn.sluzba.service.UserDetailsServiceImpl;
-import com.ftn.sluzba.service.UserService;
 
 @RestController
 public class AuthController {
@@ -25,9 +23,6 @@ public class AuthController {
 
 	@Autowired
 	private UserDetailsServiceImpl userDetailsServiceImpl;
-
-	@Autowired
-	private UserService userService;
 
 	@Autowired
 	TokenUtils tokenUtils;
@@ -52,17 +47,6 @@ public class AuthController {
 			return new ResponseEntity<String>(tokenUtils.generateToken(details), HttpStatus.OK);
 		} catch (Exception ex) {
 			return new ResponseEntity<String>(ex.getMessage(), HttpStatus.BAD_REQUEST);
-		}
-	}
-
-	@PostMapping("/api/register")
-	public ResponseEntity<?> register(@RequestBody RegisterDTO registerDTO) {
-		try {
-			userService.saveUser(registerDTO);
-			return new ResponseEntity<RegisterDTO>(registerDTO, HttpStatus.OK);
-		} catch (Exception ex) {
-			System.out.print(ex.getMessage());
-			return new ResponseEntity<String>("Invalid register", HttpStatus.BAD_REQUEST);
 		}
 	}
 
