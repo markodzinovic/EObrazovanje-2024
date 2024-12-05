@@ -2,6 +2,7 @@ package com.ftn.sluzba.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,14 +36,36 @@ public class StudentService {
 	public StudentDTO saveStudent(AddStudentDTO addStudentDTO) {
 		User user = userService.saveUser(addStudentDTO);
 
-		Student student = new Student(addStudentDTO.firstName, addStudentDTO.lastName, addStudentDTO.cardNumber, 0, "",
-				user);
+		String accountNumber = generateAccountNumber();
+		System.out.println(accountNumber);
+		Student student = new Student(addStudentDTO.firstName, addStudentDTO.lastName, addStudentDTO.cardNumber, 0,
+				accountNumber, user);
 
 		studentRepository.save(student);
 
 		StudentDTO studentDTO = new StudentDTO(student);
 
 		return studentDTO;
+	}
+
+	private static String generateAccountNumber() {
+		Integer lenghtOfAccountNumber = 18;
+
+		Random random = new Random();
+		StringBuilder accountNumber = new StringBuilder();
+
+		// Ensure the first digit is not 0
+		accountNumber.append(random.nextInt(9) + 1);
+
+		// Generate the remaining digits
+		for (int i = 1; i < lenghtOfAccountNumber; i++) {
+			if (i == 3 || i == 16) {
+				accountNumber.append("-");
+			}
+			accountNumber.append(random.nextInt(10));
+		}
+
+		return accountNumber.toString();
 	}
 
 }
